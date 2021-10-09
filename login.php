@@ -7,7 +7,7 @@ if(! isset($_POST['usuario']) || ! isset($_POST['contraseña'] )) {
 else {
     $controlarSesion = new ControladorSesion();
     $login = $controlarSesion->login($_POST['usuario'], $_POST['contraseña']);
-    if ($login[0]) === true) {
+    if ($login[0] === true) {
         $redirigir = 'home.php';
     }
     else {
