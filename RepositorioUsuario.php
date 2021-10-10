@@ -33,4 +33,18 @@ class RepositorioUsuario {
         }
         return false;
     }
+    public function save($usuario, $contraseña) {
+    $q = "INSERT INTO usuarios (usuario, nombre, apellido, contraseña)";
+    $q.= "VALUES (?, ?, ?, ?)";
+    $query = self::$connection->prepare($q);
+    $query->bind_param("ssss", $usuario->getUsuario(), $usuario->getNombre(),
+                               $usuario->getApellido(), 
+                               password_hash($contraseña, PASSWORD_DEFAULT));
+    if ($query->execute()){
+        return self::$connection->insert_id;
+    }
+    else {
+        return false;
+    }
+    }
 }

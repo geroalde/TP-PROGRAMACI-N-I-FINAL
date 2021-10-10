@@ -17,5 +17,19 @@ class ControladorSesion {
             $_SESSION['usuario'] = serialize($usuario);
             return [true, "Se ha iniciado sesión con éxito"];
         }
-    }   
- }
+    } 
+    public function create ($nombre_usuario, $nombre, $apellido, $contraseña) {
+    $repositorio = new RepositorioUsuario();
+    $usuario = new Usuario($nombre_usuario, $nombre, $apellido);
+    $id = $repositorio->save($usuario, $contraseña);
+    if ($id === false) {
+        return [false, "Error al registrarse. Intentelo de nuevo."];
+    }
+    else {
+        $usuario->setId($id);
+        session_start();
+        $_SESSION['usuario'] = serialize($usuario);
+        return [true, "La cuenta ha sido creada con éxito"];
+        }
+    }
+}
