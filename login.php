@@ -14,4 +14,4 @@ else {
         $redirigir = 'index.php?mensaje=' . $login[1];
     }
 }
-header ('Localizado en: ' .$redirigir);
+header ('Location: ' .$redirigir);
