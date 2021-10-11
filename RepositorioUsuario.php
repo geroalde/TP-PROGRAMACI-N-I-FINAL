@@ -19,27 +19,28 @@ class RepositorioUsuario {
         }
     }
     public function login ($nombre_usuario, $contraseña) {
-        $q = "SELECT id, contraseña, nombre, apellido FROM usuarios";
+        $q = "SELECT id, contraseña, nombre, apellido, nomPyme FROM usuarios";
         $q.= " WHERE usuario = ?";
         $query = self::$connection->prepare($q);
         $query->bind_param("s", $nombre_usuario);
         if ($query->execute()) {
-            $query->bind_result($id, $contraseñaencript, $nombre, $apellido);
+            $query->bind_result($id, $contraseñaencript, $nombre, $apellido, $nomPyme);
             if ($query->fetch()) {
                 if (password_verify($contraseña, $contraseñaencript)) {
-                    return new Usuario($nombre_usuario, $nombre, $apellido, $id);
+                    return new Usuario($nombre, $apellido, $nombre_usuario, $nomPyme, $id);
                 }
             }
         }
         return false;
     }
     public function save($usuario, $contraseña) {
-    $q = "INSERT INTO usuarios (usuario, nombre, apellido, contraseña)";
-    $q.= "VALUES (?, ?, ?, ?)";
+    $q = "INSERT INTO usuarios (usuario, nombre, apellido, contraseña, nomPyme)";
+    $q.= "VALUES (?, ?, ?, ?, ?)";
     $query = self::$connection->prepare($q);
-    $query->bind_param("ssss", $usuario->getUsuario(), $usuario->getNombre(),
+    $query->bind_param("sssss",$usuario->getUsuario(), $usuario->getNombre(),
                                $usuario->getApellido(), 
-                               password_hash($contraseña, PASSWORD_DEFAULT));
+                               password_hash($contraseña, PASSWORD_DEFAULT), 
+                               $usuario->getNomPyme());
     if ($query->execute()){
         return self::$connection->insert_id;
     }

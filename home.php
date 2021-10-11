@@ -1,29 +1,62 @@
+<?php include("RepositorioUsuario.php")?>
 <?php
 require_once 'Usuario.php';
 session_start();
 if (isset($_SESSION['usuario'])) {
     $usuario = unserialize($_SESSION['usuario']);
     $nomApe = $usuario->getNombreApellido();
+    $nomPym = $usuario->getNomPyme();
 }
 else {
     header ('Location: index.php');
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página principal</title>
-    <link rel="stylesheet" href="bootstrap.min.css">
-</head>
-<body class= "container">
+
+<?php include("Includes/header.php")?>
+
 <div class="jumbotron text-center">
-    <h1>-aca pondria el nombre de la pyme-</h1>
+    <h1><?=$nomPym;?></h1>
 </div>
+<div class="container p-4">
+    <div class="col-md-4">
+        <div class="card card-body">
+            <form action="CRUD/cargarEmpleado.php" method="POST">
+                <div class="form-group">
+                    <input type="text" name="nombreempleado" class="form-control"
+                    placeholder="Nombre de tu empleado" autofocus>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="edadempleado" rows="2" class="form-control"
+                    placeholder="Edad del empleado">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="sueldoempleado" rows="2" class="form-control"
+                    placeholder="Sueldo del empleado">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="numtel" rows="2" class="form-control"
+                    placeholder="Número de teléfono del empleado">
+                </div>
+                <div class="form-group">
+                <p>¿Su empleado está afiliado a un sindicato?</p>
+                    <input type="radio" name="afiliado" rows="2" class="form-control"
+                    value="s">Sí
+                    <input type="radio" name="afiliado" rows="2" class="form-control"
+                    value="n">No
+                </div>
+                <input type="submit" class="btn btn-success btn-block" name="save_task" value="Guardar datos">
+            </form>
+        </div>
+</div>
+
+<div class="col-md-8">
+
+</div>
+
+</div>
+
 <div class="text-center">
-    <h3> ver si puedo hacer algo como tirando unos consejos aleatorios </h3>
-    <p><a href= "logout.php">Cerrar sesión</a></p>
+<p><a href= "logout.php">Cerrar sesión</a></p>
 </div>
-</body>
-</html>
+
+<?php include("Includes/footer.php")?>

@@ -18,9 +18,9 @@ class ControladorSesion {
             return [true, "Se ha iniciado sesión con éxito"];
         }
     } 
-    public function create ($nombre_usuario, $nombre, $apellido, $contraseña) {
+    public function create ($nombre_usuario, $nombre, $apellido, $contraseña, $nomPyme) {
     $repositorio = new RepositorioUsuario();
-    $usuario = new Usuario($nombre_usuario, $nombre, $apellido);
+    $usuario = new Usuario($nombre_usuario, $nombre, $apellido, $nomPyme);
     $id = $repositorio->save($usuario, $contraseña);
     if ($id === false) {
         return [false, "Error al registrarse. Intentelo de nuevo."];
