@@ -37,7 +37,7 @@ class RepositorioUsuario {
     $q = "INSERT INTO usuarios (usuario, nombre, apellido, contraseña, nomPyme)";
     $q.= "VALUES (?, ?, ?, ?, ?)";
     $query = self::$connection->prepare($q);
-    $query->bind_param("sssss",$usuario->getUsuario(), $usuario->getNombre(),
+    $query->bind_param("sssss",$usuario->getNombreUsuario(), $usuario->getNombre(),
                                $usuario->getApellido(), 
                                password_hash($contraseña, PASSWORD_DEFAULT), 
                                $usuario->getNomPyme());

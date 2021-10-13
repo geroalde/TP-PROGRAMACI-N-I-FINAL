@@ -33,6 +33,6 @@ class Usuario {
         return "$this->nombre $this->apellido";
     }
     public function getNomPyme() {
-        return $nomPyme;
+        return $this->nomPyme;
     }
 }
