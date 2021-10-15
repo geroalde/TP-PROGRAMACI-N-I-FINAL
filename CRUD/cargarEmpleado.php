@@ -1,10 +1,12 @@
 <?php
 require_once '../RepositorioUsuario.php';
-require_once "../Usuario.php";
 
 session_start();
 $usuario = unserialize($_SESSION['usuario']);
 $idUsuarioActual = $usuario->getId();
+
+
+//hacer que no se pueda entrar poniendo el nombre del archivo arriba 
 
 if(isset($_POST['save_task'])) {
     $nombreEmpleado = $_POST['nombreempleado'];
@@ -15,10 +17,15 @@ if(isset($_POST['save_task'])) {
     if ($afiliado = "s") {  
         $afiliado = "Sí";
     } 
-    else {
+    else if ($afiliado = "n") {
         $afiliado = "No";
     }
-    $query = "INSERT INTO empleados(nombreEmpleado, edad, sueldo, numTel, afiliadoSindicato, idUsuarios) VALUES ('$nombreEmpleado', '$edadEmpleado', '$sueldoEmpleado', '$numTelefonoEmpleado', '$idUsuarioActual')";
+    else {
+        $afiliado = "Sin especificar";
+    }
+    $repo = new RepositorioUsuario();
+    $usuario = $repo->cargarEmpleado();
+    $query = "INSERT INTO empleados(nombreEmpleado, edad, sueldo, numTel, afiliadoSindicato, idUsuarios) VALUES ('$nombreEmpleado', '$edadEmpleado', '$sueldoEmpleado', '$numTelefonoEmpleado', '$afiliado', '$idUsuarioActual')";
     $consulta = mysqli_query(self::$connection, $query);
     if (!$consulta) {
         die("Ha ocurrido un error.");
