@@ -48,7 +48,7 @@ class RepositorioUsuario {
         return false;
     }
     }
-    public function cargarEmpleado() {
+    public function getConnect() {
         return self::$connection;
     }
 }

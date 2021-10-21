@@ -1,13 +1,11 @@
-<? include ("RepositorioUsuario.php"); 
+<?php
+
+require_once '../RepositorioEmpleado.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $query = "DELETE FROM empleados WHERE id = $id";
-    $resultado = mysqli_query(self::$connection, $query);
-    if (!$resultado) {
-        die("Ha fallado.");
-    }
-    header ('Location: home.php');
+    $repositorio = new RepositorioEmpleado();
+    $usuario = $repositorio->eliminarEmpleado($id);
 }
-
+header ('Location: ../home.php');
 ?>
